@@ -201,7 +201,24 @@ class SortableGrid extends Component {
         }
       });
       if (closest !== this.state.activeBlock) {
-        if (!this.props.undragableItemsIndex.includes(closest)) {
+        if (this.props.unsortableItemsIndex) {
+          if (!this.props.unsortableItemsIndex.includes(closest)) {
+            Animated.timing(this._getBlock(closest).currentPosition, {
+              toValue: this._getActiveBlock().origin,
+              duration: this.blockTransitionDuration
+            }).start();
+            let blockPositions = this.state.blockPositions;
+            this._getActiveBlock().origin = blockPositions[closest].origin;
+            blockPositions[closest].origin = originalPosition;
+            this.setState({ blockPositions });
+
+            var tempOrderIndex = this.itemOrder[this.state.activeBlock].order;
+            this.itemOrder[this.state.activeBlock].order = this.itemOrder[
+              closest
+            ].order;
+            this.itemOrder[closest].order = tempOrderIndex;
+          }
+        } else {
           Animated.timing(this._getBlock(closest).currentPosition, {
             toValue: this._getActiveBlock().origin,
             duration: this.blockTransitionDuration
