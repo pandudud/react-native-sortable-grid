@@ -29,7 +29,7 @@ class Block extends Component {
         style={{ flex: 1 }}
         delayLongPress={this.props.delayLongPress}
         onLongPress={() => this.props.inactive || this.props.onLongPress()}
-        onPress={() => this.props.inactive || this.props.onPress()}
+        onPress={() => this.props.onPress()}
       >
         <View style={styles.itemImageContainer}>
           <View style={this.props.itemWrapperStyle}>{this.props.children}</View>
